@@ -13,14 +13,13 @@ export default function Home({ exploreData, cardsData, discoverData }) {
     <div className="">
       <Head>
         <title>Airbnb</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/airbnb_logo.png" />
       </Head>
       <Header />
       <Banner />
       <main className="max-w-7xl mx-auto px-8 sm:px-16">
         <section className="pt-6">
-          <h2 className="text-4xl font-semibold pb-5">Explore Nearby</h2>
-
+          <h2 className="text-4xl font-semibold pb-5">Explore Nearby</h2>s
           {/* Pull some data from a server - API endpoints */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {exploreData?.map(({ img, distance, location }) => (
