@@ -4,4 +4,16 @@
   .button {
     @apply px-4 py-2 border rounded-full cursor-pointer hover:shadow-lg active:scale-95 active:bg-gray-100 transition transform duration-100 ease-out;
   }
+
+  .placeCheckbox {
+    @apply w-6 h-6 border rounded-md border-[#FF5A60] hover:opacity-80 hover:bg-[#FF5A60] cursor-pointer active:scale-105;
+  }
+
+  .placeMainText {
+    @apply text-black;
+  }
+
+  .placeSubText {
+    @apply text-gray-500;
+  }
 }

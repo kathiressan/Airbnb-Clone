@@ -1,56 +1,68 @@
 import Image from "next/image";
 import { HeartIcon } from "@heroicons/react/outline";
 import { StarIcon } from "@heroicons/react/solid";
+import React from "react";
+import Fade from "react-reveal/Fade";
 
 function InfoCard({
   img,
   location,
   title,
   description,
+  roomType,
   star,
   price,
   total,
   flexible,
 }) {
   return (
-    <div className="z-[-1] flex py-7 px-2 pr-4 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out first:border-t">
-      <div className="relative h-24 w-40 md:h-52 md:w-80 flex-shrink-0">
-        <Image
-          src={img}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-2xl"
-        />
-      </div>
-
-      <div className="flex flex-col flex-grow pl-5">
-        <div className="flex justify-between">
-          <p>{location}</p>
-          <HeartIcon className="h-7 cursor-pointer" />
+    <Fade left>
+      <div className="flex py-7 px-2 pr-4 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out first:border-t">
+        <div className="relative h-24 w-40 md:h-52 md:w-80 flex-shrink-0">
+          <Image
+            src={img}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-2xl"
+          />
         </div>
 
-        <h4 className="text-xl">{title}</h4>
+        <div className="flex flex-col flex-grow pl-5">
+          <div className="flex justify-between">
+            <p>{location}</p>
+            <HeartIcon className="h-7 cursor-pointer" />
+          </div>
 
-        <div className="border-b w-10 pt-2" />
+          <h4 className="text-xl">{title}</h4>
 
-        <p className="pt-2 text-sm text-gray-500 flex-grow">{description}</p>
+          <div className="border-b w-10 pt-2" />
 
-        {flexible && <p className="text-red-400">Flexible Cancellation</p>}
+          <p className="pt-2 text-sm text-gray-500 flex-grow">{description}</p>
 
-        <div className="flex justify-between items-end pt-5">
-          <p className="flex items-center">
-            <StarIcon className="h-5 text-red-400" />
-            {star}
-          </p>
+          <div className="flex">
+            <p className="text-red-400">{`${roomType}`}</p>
+            {flexible && (
+              <p className="text-red-400">
+                &nbsp; &bull; Flexible Cancellation
+              </p>
+            )}
+          </div>
 
-          <div>
-            <p className="text-lg lg:text-2xl font-semibold pb-2">{price}</p>
-            <p className="text-right font-extralight">{total}</p>
+          <div className="flex justify-between items-end pt-5">
+            <p className="flex items-center">
+              <StarIcon className="h-5 text-red-400" />
+              {star}
+            </p>
+
+            <div>
+              <p className="text-lg lg:text-2xl font-semibold pb-2">{price}</p>
+              <p className="text-right font-extralight">{total}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Fade>
   );
 }
 
-export default InfoCard;
+export const InfoCardMemo = React.memo(InfoCard);
