@@ -7,12 +7,11 @@ import { Switch } from "@headlessui/react";
 import { useState } from "react";
 import Slider from "react-input-slider";
 import { Popover } from "@headlessui/react";
-import Bounce from "react-reveal/Bounce";
-import Fade from "react-reveal/Fade";
 import Map from "../components/Map";
 import { useSelector } from "react-redux";
 import { selectMode } from "../slices/darkmodeSlice";
 import SearchBanner from "../components/SearchBanner";
+import Head from "next/head";
 
 function Search({ searchResults }) {
   const router = useRouter();
@@ -196,322 +195,333 @@ function Search({ searchResults }) {
   };
 
   return (
-    <div
-      className={`${
-        getDarkMode
-          ? "dark bg-[#222222] darkModeTransition"
-          : "light darkModeTransition"
-      }`}
-    >
-      <div className="relative">
+    <>
+      <Head>
+        <title>Airbnb</title>
+        <link rel="icon" href="/airbnb_logo.png" />
+      </Head>
+      <div
+        className={`${
+          getDarkMode
+            ? "dark bg-[#222222] darkModeTransition"
+            : "light darkModeTransition"
+        }`}
+      >
         <div className="relative">
-          <Header
-            placeholder={`${location} | ${range} | ${noOfGuests} guests`}
-          />
-          <SearchBanner />
-        </div>
+          <div className="relative">
+            <Header
+              placeholder={`${location} | ${range} | ${noOfGuests} guests`}
+            />
+            <SearchBanner />
+          </div>
 
-        {/* SHOW MAP BUTTON */}
-        <div className="fixed mt-[45vh] w-[100vw] max-w-[2000px] z-50">
-          <Popover className="relative left-[90%]">
-            {({ open }) => (
-              <>
-                <Popover.Button
-                  className={`invisible button z-50 bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black ${
-                    open &&
-                    "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
-                  } ${filterExists ? "xl:visible" : "invisible"}`}
-                >
-                  Open Map
-                </Popover.Button>
-                <Popover.Panel>
-                  <div className="invisible xl:visible absolute z-[999] w-[700px] h-[500px] mt-[-35rem] ml-[-44rem]">
-                    <Map searchResults={searchResults}></Map>
-                  </div>
-                </Popover.Panel>
-              </>
-            )}
-          </Popover>
-        </div>
+          {/* SHOW MAP BUTTON */}
+          <div className="fixed mt-[45vh] w-[100vw] max-w-[2000px] z-50">
+            <Popover className="relative left-[90%]">
+              {({ open }) => (
+                <>
+                  <Popover.Button
+                    className={`invisible button z-50 bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black ${
+                      open &&
+                      "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
+                    } ${filterExists ? "xl:visible" : "invisible"}`}
+                  >
+                    Open Map
+                  </Popover.Button>
+                  <Popover.Panel>
+                    <div className="invisible xl:visible absolute z-[999] w-[700px] h-[500px] mt-[-35rem] ml-[-44rem]">
+                      <Map searchResults={searchResults}></Map>
+                    </div>
+                  </Popover.Panel>
+                </>
+              )}
+            </Popover>
+          </div>
 
-        <main className="flex flex-col place-items-center flex-grow">
-          <section className="flex-grow pt-14 px-6">
-            <div className="animate-fadeEffect">
-              <p className="text-xs dark:text-white darkModeTransition">
-                300+ Stays - {range} - for {noOfGuests} guests
-              </p>
-              <h1 className="text-3xl font-semibold mt-2 mb-6 dark:text-white darkModeTransition">
-                Stays in {location}
-              </h1>
-            </div>
+          <main className="flex flex-col place-items-center flex-grow">
+            <section className="flex-grow pt-14 px-6">
+              <div className="animate-fadeEffect">
+                <p className="text-xs dark:text-white darkModeTransition">
+                  300+ Stays - {range} - for {noOfGuests} guests
+                </p>
+                <h1 className="text-3xl font-semibold mt-2 mb-6 dark:text-white darkModeTransition">
+                  Stays in {location}
+                </h1>
+              </div>
 
-            <div className="hidden lg:inline-flex mb-5 space-x-3 text-gray-800 whitespace-nowrap">
-              {/* FLEXIBILITY BUTTON */}
-              <Popover className="relative">
-                {({ open }) => (
-                  <>
-                    <Popover.Button
-                      className={`button hover:bg-[#FF5A60] hover:border-[#FF5A60] hover:text-white ${
-                        open &&
-                        "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
-                      }`}
-                    >
-                      Cancellation Flexibility
-                    </Popover.Button>
-                    <Popover.Panel className="absolute z-10 bg-white dark:text-white dark:bg-gray-900 dark:border-gray-900 rounded-xl mt-2 border p-4 shadow-lg">
-                      <div>
+              <div className="hidden lg:inline-flex mb-5 space-x-3 text-gray-800 whitespace-nowrap">
+                {/* FLEXIBILITY BUTTON */}
+                <Popover className="relative">
+                  {({ open }) => (
+                    <>
+                      <Popover.Button
+                        className={`button hover:bg-[#FF5A60] hover:border-[#FF5A60] hover:text-white ${
+                          open &&
+                          "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
+                        }`}
+                      >
+                        Cancellation Flexibility
+                      </Popover.Button>
+                      <Popover.Panel className="absolute z-10 bg-white dark:text-white dark:bg-gray-900 dark:border-gray-900 rounded-xl mt-2 border p-4 shadow-lg">
                         <div>
-                          <p>Only show stays that offer</p>
-                          <p>cancellation flexibility</p>
-                        </div>
-                        <div>
-                          <Switch
-                            checked={selectFlexibility}
-                            onChange={changeFlexibility}
-                            className={`${
-                              selectFlexibility ? "bg-[#FF5A60]" : "bg-gray-200"
-                            } relative inline-flex items-center h-6 rounded-full w-11`}
-                          >
-                            <span className="sr-only">
-                              Enable notifications
-                            </span>
-                            <span
+                          <div>
+                            <p>Only show stays that offer</p>
+                            <p>cancellation flexibility</p>
+                          </div>
+                          <div>
+                            <Switch
+                              checked={selectFlexibility}
+                              onChange={changeFlexibility}
                               className={`${
                                 selectFlexibility
-                                  ? "translate-x-6"
-                                  : "translate-x-1"
-                              } inline-block w-4 h-4 bg-white rounded-full transform transition ease-in-out duration-200`}
-                            />
-                          </Switch>
+                                  ? "bg-[#FF5A60]"
+                                  : "bg-gray-200"
+                              } relative inline-flex items-center h-6 rounded-full w-11`}
+                            >
+                              <span className="sr-only">
+                                Enable notifications
+                              </span>
+                              <span
+                                className={`${
+                                  selectFlexibility
+                                    ? "translate-x-6"
+                                    : "translate-x-1"
+                                } inline-block w-4 h-4 bg-white rounded-full transform transition ease-in-out duration-200`}
+                              />
+                            </Switch>
+                          </div>
                         </div>
-                      </div>
-                    </Popover.Panel>
-                  </>
-                )}
-              </Popover>
+                      </Popover.Panel>
+                    </>
+                  )}
+                </Popover>
 
-              {/* TYPE OF PLACE BUTTON */}
-              <Popover className="relative">
-                {({ open }) => (
-                  <>
-                    <Popover.Button
-                      className={`button hover:bg-[#FF5A60] hover:border-[#FF5A60] hover:text-white ${
-                        open &&
-                        "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
-                      }`}
-                    >
-                      Type of Place
-                    </Popover.Button>
-                    <Popover.Panel className="absolute z-10 bg-white rounded-xl mt-2 border p-4 shadow-lg dark:bg-gray-900 dark:border-gray-900">
-                      <div>
+                {/* TYPE OF PLACE BUTTON */}
+                <Popover className="relative">
+                  {({ open }) => (
+                    <>
+                      <Popover.Button
+                        className={`button hover:bg-[#FF5A60] hover:border-[#FF5A60] hover:text-white ${
+                          open &&
+                          "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
+                        }`}
+                      >
+                        Type of Place
+                      </Popover.Button>
+                      <Popover.Panel className="absolute z-10 bg-white rounded-xl mt-2 border p-4 shadow-lg dark:bg-gray-900 dark:border-gray-900">
+                        <div>
+                          <div className="flex flex-col space-y-4">
+                            <div className="flex space-x-3">
+                              <div
+                                onClick={changePlaceType1}
+                                className={`${
+                                  placeType1 ? "bg-[#FF5A60]" : "bg-white"
+                                } placeCheckbox`}
+                              />
+                              <div className="flex flex-col">
+                                <p className="placeMainText">Entire Place</p>
+                                <p className="placeSubText">
+                                  Have a place to yourself
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="flex space-x-3">
+                              <div
+                                onClick={changePlaceType2}
+                                className={`${
+                                  placeType2 ? "bg-[#FF5A60]" : "bg-white"
+                                } placeCheckbox`}
+                              />
+                              <div className="flex flex-col">
+                                <p className="placeMainText">Private Room</p>
+                                <p className="placeSubText">
+                                  Have your own room and share
+                                </p>
+                                <p className="placeSubText">
+                                  some common spaces
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="flex space-x-3">
+                              <div
+                                onClick={changePlaceType3}
+                                className={`${
+                                  placeType3 ? "bg-[#FF5A60]" : "bg-white"
+                                } placeCheckbox`}
+                              />
+                              <div className="flex flex-col">
+                                <p className="placeMainText">Hotel Room</p>
+                                <p className="placeSubText">
+                                  Have a private or shared room in a boutique
+                                </p>
+                                <p className="placeSubText">
+                                  hotel, hostel, and more
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex space-x-3">
+                              <div
+                                onClick={changePlaceType4}
+                                className={`${
+                                  placeType4 ? "bg-[#FF5A60]" : "bg-white"
+                                } placeCheckbox`}
+                              />
+                              <div className="flex flex-col">
+                                <p className="placeMainText">Shared Room</p>
+                                <p className="placeSubText">
+                                  Stay in a shared space, like a common room
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </Popover.Panel>
+                    </>
+                  )}
+                </Popover>
+
+                {/* PRICE BUTTON */}
+                <Popover className="relative">
+                  {({ open }) => (
+                    <>
+                      <Popover.Button
+                        className={`button hover:bg-[#FF5A60] hover:border-[#FF5A60] hover:text-white ${
+                          open &&
+                          "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
+                        }`}
+                      >
+                        Price
+                      </Popover.Button>
+                      <Popover.Panel className="absolute z-10 bg-white rounded-xl mt-2 border p-4 shadow-lg dark:bg-gray-900 dark:border-gray-900">
                         <div className="flex flex-col space-y-4">
-                          <div className="flex space-x-3">
-                            <div
-                              onClick={changePlaceType1}
-                              className={`${
-                                placeType1 ? "bg-[#FF5A60]" : "bg-white"
-                              } placeCheckbox`}
-                            />
-                            <div className="flex flex-col">
-                              <p className="placeMainText">Entire Place</p>
-                              <p className="placeSubText">
-                                Have a place to yourself
-                              </p>
+                          <div className="flex justify-between">
+                            <div className="dark:text-white">$10</div>
+                            <div className="text-[#FF5A60]">
+                              ${selectPrice.x}
                             </div>
+                            <div className="dark:text-white">$100</div>
                           </div>
-
-                          <div className="flex space-x-3">
-                            <div
-                              onClick={changePlaceType2}
-                              className={`${
-                                placeType2 ? "bg-[#FF5A60]" : "bg-white"
-                              } placeCheckbox`}
-                            />
-                            <div className="flex flex-col">
-                              <p className="placeMainText">Private Room</p>
-                              <p className="placeSubText">
-                                Have your own room and share
-                              </p>
-                              <p className="placeSubText">some common spaces</p>
-                            </div>
-                          </div>
-
-                          <div className="flex space-x-3">
-                            <div
-                              onClick={changePlaceType3}
-                              className={`${
-                                placeType3 ? "bg-[#FF5A60]" : "bg-white"
-                              } placeCheckbox`}
-                            />
-                            <div className="flex flex-col">
-                              <p className="placeMainText">Hotel Room</p>
-                              <p className="placeSubText">
-                                Have a private or shared room in a boutique
-                              </p>
-                              <p className="placeSubText">
-                                hotel, hostel, and more
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="flex space-x-3">
-                            <div
-                              onClick={changePlaceType4}
-                              className={`${
-                                placeType4 ? "bg-[#FF5A60]" : "bg-white"
-                              } placeCheckbox`}
-                            />
-                            <div className="flex flex-col">
-                              <p className="placeMainText">Shared Room</p>
-                              <p className="placeSubText">
-                                Stay in a shared space, like a common room
-                              </p>
-                            </div>
-                          </div>
+                          <Slider
+                            styles={{
+                              track: {
+                                backgroundColor: "#FCA5A5",
+                              },
+                              active: {
+                                backgroundColor: "#FF5A60",
+                              },
+                            }}
+                            xstep={10}
+                            xmin={10}
+                            xmax={100}
+                            x={selectPrice.x}
+                            onChange={({ x }) => {
+                              setSelectPrice({ x: parseFloat(x) });
+                              setFilterExists(false);
+                            }}
+                          />
                         </div>
-                      </div>
-                    </Popover.Panel>
-                  </>
-                )}
-              </Popover>
+                      </Popover.Panel>
+                    </>
+                  )}
+                </Popover>
 
-              {/* PRICE BUTTON */}
-              <Popover className="relative">
-                {({ open }) => (
-                  <>
-                    <Popover.Button
-                      className={`button hover:bg-[#FF5A60] hover:border-[#FF5A60] hover:text-white ${
-                        open &&
-                        "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
-                      }`}
-                    >
-                      Price
-                    </Popover.Button>
-                    <Popover.Panel className="absolute z-10 bg-white rounded-xl mt-2 border p-4 shadow-lg dark:bg-gray-900 dark:border-gray-900">
-                      <div className="flex flex-col space-y-4">
-                        <div className="flex justify-between">
-                          <div className="dark:text-white">$10</div>
-                          <div className="text-[#FF5A60]">${selectPrice.x}</div>
-                          <div className="dark:text-white">$100</div>
-                        </div>
-                        <Slider
-                          styles={{
-                            track: {
-                              backgroundColor: "#FCA5A5",
-                            },
-                            active: {
-                              backgroundColor: "#FF5A60",
-                            },
-                          }}
-                          xstep={10}
-                          xmin={10}
-                          xmax={100}
-                          x={selectPrice.x}
-                          onChange={({ x }) => {
-                            setSelectPrice({ x: parseFloat(x) });
-                            setFilterExists(false);
-                          }}
-                        />
-                      </div>
-                    </Popover.Panel>
-                  </>
-                )}
-              </Popover>
-
-              {/* ROOMS AND BEDS BUTTON */}
-              <Popover className="relative">
-                {({ open }) => (
-                  <>
-                    <Popover.Button
-                      className={`button hover:bg-[#FF5A60] hover:border-[#FF5A60] hover:text-white ${
-                        open &&
-                        "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
-                      }`}
-                    >
-                      Rooms and Beds
-                    </Popover.Button>
-                    <Popover.Panel className="absolute z-10 bg-white dark:text-white rounded-xl mt-2 border p-4 shadow-lg dark:bg-gray-900 dark:border-gray-900">
-                      <div>
+                {/* ROOMS AND BEDS BUTTON */}
+                <Popover className="relative">
+                  {({ open }) => (
+                    <>
+                      <Popover.Button
+                        className={`button hover:bg-[#FF5A60] hover:border-[#FF5A60] hover:text-white ${
+                          open &&
+                          "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
+                        }`}
+                      >
+                        Rooms and Beds
+                      </Popover.Button>
+                      <Popover.Panel className="absolute z-10 bg-white dark:text-white rounded-xl mt-2 border p-4 shadow-lg dark:bg-gray-900 dark:border-gray-900">
                         <div>
-                          <p>Yet to be built, </p>
-                          <p>Sonny!</p>
+                          <div>
+                            <p>Yet to be built, </p>
+                            <p>Sonny!</p>
+                          </div>
                         </div>
-                      </div>
-                    </Popover.Panel>
-                  </>
-                )}
-              </Popover>
+                      </Popover.Panel>
+                    </>
+                  )}
+                </Popover>
 
-              {/* MORE FILTERS BUTTON */}
-              <Popover className="relative">
-                {({ open }) => (
-                  <>
-                    <Popover.Button
-                      className={`button hover:bg-[#FF5A60] hover:border-[#FF5A60] hover:text-white ${
-                        open &&
-                        "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
-                      }`}
-                    >
-                      More Filters
-                    </Popover.Button>
-                    <Popover.Panel className="absolute z-10 bg-white dark:text-white rounded-xl mt-2 border p-4 shadow-lg dark:bg-gray-900 dark:border-gray-900">
-                      <div>
+                {/* MORE FILTERS BUTTON */}
+                <Popover className="relative">
+                  {({ open }) => (
+                    <>
+                      <Popover.Button
+                        className={`button hover:bg-[#FF5A60] hover:border-[#FF5A60] hover:text-white ${
+                          open &&
+                          "bg-[#FF5A60] border-[#FF5A60] text-white dark:bg-black dark:border-black"
+                        }`}
+                      >
+                        More Filters
+                      </Popover.Button>
+                      <Popover.Panel className="absolute z-10 bg-white dark:text-white rounded-xl mt-2 border p-4 shadow-lg dark:bg-gray-900 dark:border-gray-900">
                         <div>
-                          <p>Yet to be built, </p>
-                          <p>Sonny!</p>
+                          <div>
+                            <p>Yet to be built, </p>
+                            <p>Sonny!</p>
+                          </div>
                         </div>
-                      </div>
-                    </Popover.Panel>
-                  </>
-                )}
-              </Popover>
-            </div>
-          </section>
+                      </Popover.Panel>
+                    </>
+                  )}
+                </Popover>
+              </div>
+            </section>
 
-          <div className="flex flex-col flex-grow ml-7 w-[80vw] justify-center items-center">
-            <div className="flex flex-col flex-grow max-w-[1200px]">
-              {searchResults.map(
-                ({
-                  img,
-                  location,
-                  title,
-                  description,
-                  roomType,
-                  star,
-                  price,
-                  pricepernight,
-                  total,
-                  flexible,
-                }) => (
-                  <RenderInfoCard
-                    key={img}
-                    img={img}
-                    location={location}
-                    title={title}
-                    description={description}
-                    roomType={roomType}
-                    star={star}
-                    price={price}
-                    pricepernight={pricepernight}
-                    total={total}
-                    flexible={flexible}
-                  />
-                )
+            <div className="flex flex-col flex-grow ml-7 w-[80vw] justify-center items-center">
+              <div className="flex flex-col flex-grow max-w-[1200px]">
+                {searchResults.map(
+                  ({
+                    img,
+                    location,
+                    title,
+                    description,
+                    roomType,
+                    star,
+                    price,
+                    pricepernight,
+                    total,
+                    flexible,
+                  }) => (
+                    <RenderInfoCard
+                      key={img}
+                      img={img}
+                      location={location}
+                      title={title}
+                      description={description}
+                      roomType={roomType}
+                      star={star}
+                      price={price}
+                      pricepernight={pricepernight}
+                      total={total}
+                      flexible={flexible}
+                    />
+                  )
+                )}
+              </div>
+              {!filterExists && (
+                <div className="text-2xl pb-20 pt-5 flex">
+                  <div className="border border-[#FF5A60] text-white bg-[#FF5A60] p-4 rounded-xl">
+                    <p>No Matches Found!</p>
+                    <p>Try a different filter.</p>
+                  </div>
+                </div>
               )}
             </div>
-            {!filterExists && (
-              <div className="text-2xl pb-20 pt-5 flex">
-                <div className="border border-[#FF5A60] text-white bg-[#FF5A60] p-4 rounded-xl">
-                  <p>No Matches Found!</p>
-                  <p>Try a different filter.</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </main>
+          </main>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 }
 
