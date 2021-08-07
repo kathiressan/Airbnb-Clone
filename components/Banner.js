@@ -10,13 +10,13 @@ function Banner() {
         objectFit="cover"
         className="w-100"
       />
-      <div className="absolute top-5 left-5 sm:left-10 xl:p-5 2xl:p-7">
+      <div className="absolute top-20 sm:top-28 xl:top-60 left-5 sm:left-10 xl:p-5 2xl:p-7">
         {/* <p className="text-sm sm:text-lg">Not sure where to go? Perfect.</p>
         <button className="text-purple-500 bg-white px-10 py-4 shadow-md rounded-full font-bold my-3 hover:shadow-xl active:scale-90 transition duration-150">
           I'm flexible
         </button> */}
         <Fade top>
-          <h1 className="text-2xl md:text-3xl lg:text-5xl lg:pb-4 sm:text-3xl text-white w-72 xl:w-[28rem] 2xl:w-[30rem] font-extrabold">
+          <h1 className="text-xl lg:text-5xl lg:pb-4 sm:text-3xl text-white w-72 xl:w-[28rem] 2xl:w-[30rem] font-extrabold">
             Olympian & Paralympian Online Experiences
           </h1>
           <button className="text-black bg-white px-5 py-3 lg:px-10 lg:py-4 shadow-md rounded-full font-bold my-3 hover:shadow-xl active:scale-90 transition duration-150 hover:text-white hover:bg-[#FF5A60]">
